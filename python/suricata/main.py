@@ -40,6 +40,9 @@ def main(version):
     """
     Main function that orchestrates the downloading, extracting, and processing of rule files.
     """
+    # 如果 csa.rules 存在则删除文件
+    if os.path.exists("csa.rules"):
+        os.remove("csa.rules")
     if download_rules(version):
         if extract_rules():
             process_files()
