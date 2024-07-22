@@ -12,8 +12,43 @@ classtype_list = ['command-and-control', 'coin-mining', 'credential-theft', 'suc
                   'successful-dos', 'non-standard-protocol', 'attempted-recon', 'web-application-attack',
                   'trojan-activity', 'unsuccessful-user', 'successful-user', 'successful-admin', 'shellcode-detect',
                   'attempted-user', 'attempted-admin']
+keywords = ['mitre_', 'attack_target']
 # 定义 Set
 portVars = set()
+
+regex = re.compile(r'\s*alert [^\(]*\(msg:"([^"]+)";.*\)')
+classtype_regex = re.compile(r'\bclasstype:(\S+);')
+replacements = {
+    r'^ET EXPLOIT_KIT\s*': '',
+    r'^ET EXPLOIT\s*': '',
+    r'^ET ACTIVEX\s*': '',
+    r'^ET ADWARE_PUP\s*': '',
+    r'^ET COINMINER\s*': '',
+    r'^ET CURRENT_EVENTS\s*': '',
+    r'^ET HUNTING\s*': '',
+    r'^ET INFO\s*': '',
+    r'^ET CNC\s*': '',
+    r'^GPL EXPLOIT\s*': '',
+    r'^DRIVEBY\s*': '',
+    r'\[NCC GROUP\]\s*': '',
+    r'\[PT Security\]\s*': '',
+    r'\[401TRG\]\s*': '',
+    r'\[Fireeye\]\s*': '',
+    r'\[PTsecurity\]\s*': '',
+    r'\[eSentire\]\s*': '',
+    r'\[TW\]\s*': '',
+    r'\[PwnedPiper\]\s*': '',
+    r'\[Rapid7\]\s*': '',
+    r'\[TGI\]\s*': '',
+    r'\[ConnectWise CRU\]\s*': '',
+    r'\[GIGAMON_ATR\]\s*': '',
+    r'\[PwC CTD\] -- MultiGroup -\s*': '',
+    r'^ET (\w+)\s*': r'\1 ',
+    r'^CNC (\w+)\s*': r'\1 ',
+    r'^GPL (\w+)\s*': r'\1 ',
+    r'^ATTACK_RESPONSE\s*': 'ATTACK RESPONSE ',
+    r'^DYNAMIC_DNS\s*': 'DYNAMIC DNS '
+}
 
 
 def process_files():
@@ -37,8 +72,6 @@ def process_file(filepath, full_file):
     """
     Read a .rules file, extract messages, translate them, and write the results to csa.rules.
     """
-    regex = re.compile(r'\s*alert [^\(]*\(msg:"([^"]+)";.*\)')
-    classtype_regex = re.compile(r'\bclasstype:(\S+);')
     with open(filepath, 'r', encoding='utf-8') as file:
         lines = file.readlines()
     with open("csa.rules", "a", encoding='utf-8') as output:
@@ -49,7 +82,8 @@ def process_file(filepath, full_file):
                 classtype_match = classtype_regex.search(line)
                 if not full_file and classtype_match:
                     classtype = classtype_match.group(1)
-                if match and (full_file or classtype in classtype_list):
+                # 如果匹配到，则直接添加规则, 否则继续判断若全文添加或属于指定类型或包含指定关键字则添加规则
+                if match and (full_file or classtype in classtype_list or any(keyword in line for keyword in keywords)):
                     # 从 line 中提取所有 \$\w+_PORTS
                     ports = re.findall(r'\$(\w+_PORTS)', line)
                     # 如果有则添加每一个匹配到的名称到 portVars 中
@@ -57,17 +91,9 @@ def process_file(filepath, full_file):
                         portVars.update(ports)
                     original_msg = match.group(1)
                     # 删除开头的 'ET EXPLOIT ' 或 'GPL EXPLOIT '
-                    original_simple_msg = original_msg.replace('ET EXPLOIT ', '').replace('GPL EXPLOIT ', '').replace(
-                        '[NCC GROUP] ', '').replace('[PT Security] ', '').replace('[401TRG] ', '').replace(
-                        'ET EXPLOIT_KIT ', '').replace('ET ACTIVEX ', '').replace('ET ADWARE_PUP', '').replace(
-                        'ET ATTACK_RESPONSE ', 'ATTACK_RESPONSE ').replace(
-                        'GPL ATTACK_RESPONSE ', 'ATTACK_RESPONSE ').replace('ET COINMINER ', '').replace(
-                        'ET CURRENT_EVENTS ', '').replace('ET DNS ', '').replace('ET HUNTING ', '').replace(
-                        'ET INFO ', '').replace('ET MALWARE ', 'MALWARE ').replace('ET CNC ', '').replace(
-                        '[Fireeye] ', '').replace('[FIREEYE] ', '').replace('ET FTP ', 'FTP ').replace(
-                        'GPL FTP ', 'FTP ').replace('ET DOS ', 'DOS ').replace('GPL DNS ', 'DNS ').replace(
-                        'GPL IMAP ', 'IMAP '
-                    )
+                    original_simple_msg = original_msg
+                    for pattern, replacement in replacements.items():
+                        original_simple_msg = re.sub(pattern, replacement, original_simple_msg, flags=re.IGNORECASE)
 
                     translated_msg = translate_text(original_simple_msg)
                     modified_line = line.replace(f'msg:"{original_msg}"', f'msg:"{translated_msg}"')
