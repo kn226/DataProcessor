@@ -63,8 +63,11 @@ def process_file(filepath, full_file):
                         'ET ATTACK_RESPONSE ', 'ATTACK_RESPONSE ').replace(
                         'GPL ATTACK_RESPONSE ', 'ATTACK_RESPONSE ').replace('ET COINMINER ', '').replace(
                         'ET CURRENT_EVENTS ', '').replace('ET DNS ', '').replace('ET HUNTING ', '').replace(
-                        'ET INFO ', '').replace('ET MALWARE ', 'MALWARE ').replace('ET CNC ', '').replace('[Fireeye] ',
-                                                                                                          '')
+                        'ET INFO ', '').replace('ET MALWARE ', 'MALWARE ').replace('ET CNC ', '').replace(
+                        '[Fireeye] ', '').replace('[FIREEYE] ', '').replace('ET FTP ', 'FTP ').replace(
+                        'GPL FTP ', 'FTP ').replace('ET DOS ', 'DOS ').replace('GPL DNS ', 'DNS ').replace(
+                        'GPL IMAP ', 'IMAP '
+                    )
 
                     translated_msg = translate_text(original_simple_msg)
                     modified_line = line.replace(f'msg:"{original_msg}"', f'msg:"{translated_msg}"')
