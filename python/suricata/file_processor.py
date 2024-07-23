@@ -6,7 +6,7 @@ import re
 
 from translate import translate_text
 
-exclude_file_list = ['emerging-deleted.rules']
+exclude_file_list = ['emerging-deleted.rules', 'emerging-info.rules']
 file_list = ['emerging-exploit.rules', 'emerging-coinminer.rules']
 classtype_list = ['command-and-control', 'coin-mining', 'credential-theft', 'successful-recon-largescale',
                   'successful-dos', 'non-standard-protocol', 'attempted-recon', 'web-application-attack',
@@ -41,6 +41,7 @@ replacements = {
     r'\[Rapid7\]\s*': '',
     r'\[TGI\]\s*': '',
     r'\[ConnectWise CRU\]\s*': '',
+    r'\[Abuse\.ch\]\s*': '',
     r'\[GIGAMON_ATR\]\s*': '',
     r'\[PwC CTD\] -- MultiGroup -\s*': '',
     r'^ET (\w+)\s*': r'\1 ',

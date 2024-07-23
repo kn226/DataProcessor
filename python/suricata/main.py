@@ -1,10 +1,12 @@
 '''
 Main module to download and process rule files.
 '''
-import sys
-import requests
-import tarfile
 import os
+import sys
+import tarfile
+
+import requests
+
 from file_processor import process_files
 
 
@@ -36,16 +38,18 @@ def extract_rules():
         return False
 
 
-def main(version):
+def main(version, redownload=False):
     """
     Main function that orchestrates the downloading, extracting, and processing of rule files.
     """
     # 如果 csa.rules 存在则删除文件
     if os.path.exists("csa.rules"):
         os.remove("csa.rules")
-    if download_rules(version):
+    if redownload and download_rules(version):
         if extract_rules():
             process_files()
+    else:
+        process_files()
 
 
 if __name__ == "__main__":
