@@ -50,6 +50,8 @@ def send_push_notification(title, content, channel, token):
 
 
 def translate_text(text, retry=True):
+    global translate_count
+    global translate_cache
     # 检查缓存
     if text in translate_cache:
         return translate_cache[text]
