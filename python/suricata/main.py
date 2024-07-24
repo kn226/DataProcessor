@@ -45,9 +45,10 @@ def main(version, redownload=False):
     # 如果 csa.rules 存在则删除文件
     if os.path.exists("csa.rules"):
         os.remove("csa.rules")
-    if redownload and download_rules(version):
-        if extract_rules():
-            process_files()
+    if not os.path.exists("emerging.rules.tar.gz") or redownload:
+        if download_rules(version):
+            if extract_rules():
+                process_files()
     else:
         process_files()
 
