@@ -6,7 +6,7 @@ from openai import OpenAI
 
 
 class TongyiBot(BaseBot):
-    API_KEY = "sk-99c900ec611c4c48864bfdf937f4bc33"
+    API_KEY = ""
 
     def get_access_token(self):
         pass

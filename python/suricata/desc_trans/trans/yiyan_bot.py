@@ -8,8 +8,8 @@ from tqdm import tqdm
 
 
 class YiyanBot(BaseBot):
-    API_KEY = "cYksJKINJyMB2BPujHdCLcbU"
-    SECRET_KEY = "e3aVJIze0wbTYxD8l9sQHqMuRMr2cWzT"
+    API_KEY = ""
+    SECRET_KEY = ""
 
     def get_access_token(self):
         """
