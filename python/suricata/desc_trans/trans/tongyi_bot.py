@@ -26,7 +26,10 @@ class TongyiBot(BaseBot):
         completion = client.chat.completions.create(
             model="qwen-turbo",
             messages=[
-                {'role': 'user', 'content': f"解释一下如下的工控规则{q if len(msg) == 0 else msg}"}
+                {'role': 'user',
+                 'content': f"解释一下如下的 suricata 入侵检测规则，不用给出建议，直观解释一下即可，我需要展示给不懂工控安全的人员去看，我的要求是文字限制在 "
+                            f"100~300字，且不要返回markdown格式，返回字符串即可，以 '此风险指的是' 为开头，返回内容不带双引号，规则如下：{q if len(msg) == 0 else msg}"
+                 }
             ],
             temperature=0.8,
             top_p=0.8
