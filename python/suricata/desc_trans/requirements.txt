@@ -1,4 +1,5 @@
 pandas
 tqdm
-importlib.util
 openai
+requests
+ast

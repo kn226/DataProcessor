@@ -6,7 +6,7 @@ class DoubaoBot(BaseBot):
     def get_access_token(self):
         pass
 
-    def ask_q(self, q=None) -> dict:
+    def ask_q(self, q: str, sid_cache: dict) -> dict:
         pass
 
     @staticmethod
