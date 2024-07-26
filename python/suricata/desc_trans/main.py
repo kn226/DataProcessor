@@ -1,43 +1,71 @@
-# sid:desc
-import sys
+import ast
+import re
+from multiprocessing import Process
+from typing import Type
 
 from suricata.desc_trans.trans.bot_factory import BaseBot
-from suricata.desc_trans.trans.doubao_bot import DoubaoBot
-from suricata.desc_trans.trans.minimax_bot import MiniMaxBot
 from suricata.desc_trans.trans.tongyi_bot import TongyiBot
 from suricata.desc_trans.trans.xinghuo_bot import XinghuoBot
 from suricata.desc_trans.trans.yiyan_bot import YiyanBot
 from tqdm import tqdm
 
-rule_d = {}
-platform_d = {}
+dict_cache = set()
+
+bots = {}
 
 
-# todo
-def read_rules(bot):
-    with open("csa.rules", "r", encoding='utf-8') as file:
+def trans(bot_seq: int, i_file: str, o_file: str):
+    b = bots.get(bot_seq)
+
+    with open(i_file, "r", encoding='utf-8') as file:
         lines = file.readlines()
         for i in tqdm(range(len(lines))):
-            resp = bot.ask_q(lines[i])
-            with open("desc.dict", 'a', encoding='utf-8') as output:
+            line = lines[i]
+            # 适配空行与注释行
+            if len(line) == 0 or line == '\n' or line.startswith("#"):
+                continue
+            try:
+                resp = b.ask_q(line, dict_cache)
+                if len(resp) == 0:
+                    continue
+            except Exception as e:
+                print(e)
+                continue
+            with open(o_file, 'a', encoding='utf-8') as output:
                 output.write(str(resp) + "\n")
 
 
-def init_platform(platform: int = 0):
-    if platform == 0:
-        b = YiyanBot()
-    elif platform == 1:
-        b = XinghuoBot()
-    elif platform == 2:
-        b = TongyiBot()
-    elif platform == 3:
-        b = MiniMaxBot()
-    else:
-        b = DoubaoBot()
+def init_dict_cache(i_files: list[str]):
+    for i_file in i_files:
+        with open(i_file, 'r', encoding='utf-8') as file:
+            for line in file.readlines():
+                try:
+                    d = ast.literal_eval(line.strip())
+                    if 'sid' in d:
+                        dict_cache.add(d['sid'])
+                except ValueError as e:
+                    print(e.__cause__)
+                    continue
 
-    return b
+
+class BotFactory:
+    def __init__(self, bot: Type[BaseBot]) -> None:
+        self.bot = bot
+
+    def instance(self) -> BaseBot:
+        return self.bot()
+
+
+def init_bots():
+    tong_yi = BotFactory(TongyiBot).instance()
+    bots[tong_yi.get_seq()] = tong_yi
+    xing_huo = BotFactory(XinghuoBot).instance()
+    bots[xing_huo.get_seq()] = xing_huo
+    yi_yan = BotFactory(YiyanBot).instance()
+    bots[yi_yan.get_seq()] = yi_yan
 
 
 if __name__ == '__main__':
-    b = init_platform(0 if len(sys.argv) < 2 else sys.argv[1])
-    read_rules(b)
+    init_bots()
+    init_dict_cache(["desc/desc.dict"])
+    trans(0, "rules/csa.rules", "desc/desc.dict")
