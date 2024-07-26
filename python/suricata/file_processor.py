@@ -63,9 +63,13 @@ def process_files():
                 continue
             elif file in file_list:
                 print(f'Processing {file}...')
+                with open("csa.rules", "a", encoding='utf-8') as output:
+                    output.write(f'\n# {file}\n')
                 process_file(os.path.join(root, file), True)
             else:
                 print(f'analysis {file}...')
+                with open("csa.rules", "a", encoding='utf-8') as output:
+                    output.write(f'\n# {file}\n')
                 process_file(os.path.join(root, file), False)
 
 
