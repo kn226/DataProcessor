@@ -19,7 +19,7 @@ class TongyiBot(BaseBot):
         completion = client.chat.completions.create(
             model="qwen-turbo",
             messages=[
-                {'role': 'user', 'content': f"解释一下如下的工控规则{q}"}
+                {'role': 'user', 'content': f"解释一下 suricata 入侵检测规则: `{q}`"}
             ],
             temperature=0.8,
             top_p=0.8

@@ -27,7 +27,7 @@ class YiyanBot(BaseBot):
             "messages": [
                 {
                     "role": "user",
-                    'content': f"解释一下如下的工控规则{q}"
+                    'content': f"我是一个二年级的小学生，给我解释一下 suricata 入侵检测规则: `{q}`"
                 }
             ]
         })
