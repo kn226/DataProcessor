@@ -7,7 +7,7 @@ import re
 from translate import translate_text
 
 exclude_file_list = ['emerging-deleted.rules', 'emerging-info.rules']
-file_list = ['emerging-exploit.rules', 'emerging-coinminer.rules']
+file_list = ['emerging-exploit.rules', 'emerging-coinminer.rules', 'emerging-worm.rules']
 classtype_list = ['command-and-control', 'coin-mining', 'credential-theft', 'successful-recon-largescale',
                   'successful-dos', 'non-standard-protocol', 'attempted-recon', 'web-application-attack',
                   'trojan-activity', 'unsuccessful-user', 'successful-user', 'successful-admin', 'shellcode-detect',
