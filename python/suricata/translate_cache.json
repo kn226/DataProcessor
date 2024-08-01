@@ -20694,5 +20694,15 @@
     "MALWARE UNK_ConsoleCollie URI Observed in HTTP Request": "恶意软件 UNK_ConsoleCollie URI 观察到在 HTTP 请求中",
     "MALWARE Observed Malicious UNK_ConsoleCollie Related Certificate Observed (O=IGhnPoQvfb)": "恶意软件观察到的与 UNK_ConsoleCollie 相关的恶意证书观察到 (O=IGhnPoQvfb)",
     "MALWARE UNK_ConsoleCollie CnC Domain in DNS Lookup (conn .phmdbad .live)": "在 DNS 查询中检测到的恶意软件 UNK_ConsoleCollie CnC 域名 (conn.phmdbad.live)",
-    "MALWARE UNK_ConsoleCollie CnC Domain in DNS Lookup (chemdl .gangtao .live)": "恶意软件 UNK_ConsoleCollie CnC 域名在 DNS 查询中 (chemdl.gangtao.live)"
+    "MALWARE UNK_ConsoleCollie CnC Domain in DNS Lookup (chemdl .gangtao .live)": "恶意软件 UNK_ConsoleCollie CnC 域名在 DNS 查询中 (chemdl.gangtao.live)",
+    "MALWARE Observed UNK_ConsoleCollie Domain (conn .phmdbad .live in TLS SNI)": "观察到恶意软件 UNK_ConsoleCollie 域（conn .phmdbad .live 在 TLS SNI 中）",
+    "MALWARE Observed UNK_ConsoleCollie Domain (chemdl .gangtao .live in TLS SNI)": "观察到恶意软件 UNK_ConsoleCollie 域（chemdl.gangtao.live 在 TLS SNI 中）",
+    "MALWARE Xworm CnC Domain in DNS Lookup (223 .ip .ply .gg)": "恶意软件 Xworm CnC 域名在 DNS 查询中 (223 .ip .ply .gg)",
+    "MALWARE Observed Xworm Domain (223 .ip .ply .gg in TLS SNI)": "恶意软件 观察到 Xworm 域 (223 .ip .ply .gg 在 TLS SNI 中)",
+    "MALWARE Cryptbot CnC Domain in DNS Lookup (analforeverlove .top)": "恶意软件 Cryptbot CnC 域名在 DNS 查找中（analforeverlove.top）",
+    "MALWARE Cryptbot CnC Domain in DNS Lookup (rzfift15ht .top)": "恶意软件 Cryptbot CnC 域名在 DNS 查询中 (rzfift15ht .top)",
+    "MALWARE Cryptbot CnC Domain in DNS Lookup (rzeight18pt .top)": "恶意软件 Cryptbot CnC 域名在 DNS 查找中 (rzeight18pt .top)",
+    "MALWARE Win32/Cryptbotv2 CnC Activity (POST) M4": "恶意软件 Win32/Cryptbotv2 CnC 活动（POST） M4",
+    "MALWARE Observed Cryptbot Domain (analforeverlove .top in TLS SNI)": "观察到的恶意软件 Cryptbot 域名 (analforeverlove.top 在 TLS SNI 中)",
+    "MALWARE Observed Cryptbot Domain (rzfift15ht .top in TLS SNI)": "观察到恶意软件 Cryptbot 域名（rzfift15ht .top 在 TLS SNI 中）"
 }
