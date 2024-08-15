@@ -6,7 +6,7 @@ import re
 
 from translate import translate_text
 
-exclude_file_list = ['emerging-deleted.rules', 'emerging-info.rules']
+exclude_file_list = ['emerging-deleted.rules', 'emerging-info.rules', 'emerging-icmp_info.rules', 'tor.rules']
 file_list = ['emerging-exploit.rules', 'emerging-coinminer.rules', 'emerging-worm.rules']
 classtype_list = ['command-and-control', 'coin-mining', 'credential-theft', 'successful-recon-largescale',
                   'successful-dos', 'non-standard-protocol', 'attempted-recon', 'web-application-attack',
@@ -50,6 +50,8 @@ replacements = {
     r'^GPL (\w+)\s*': r'\1 ',
     r'^ATTACK_RESPONSE\s*': 'ATTACK RESPONSE ',
     r'^DYNAMIC_DNS\s*': 'DYNAMIC DNS ',
+    r'^MOBILE_MALWARE\s*': 'MOBILE MALWARE ',
+    r'^WEB_SPECIFIC_APPS\s*': '',
     r'^WEB_CLIENT\s*': 'WEB CLIENT '
 }
 
