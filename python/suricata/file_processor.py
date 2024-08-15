@@ -13,6 +13,7 @@ classtype_list = ['command-and-control', 'coin-mining', 'credential-theft', 'suc
                   'trojan-activity', 'unsuccessful-user', 'successful-user', 'successful-admin', 'shellcode-detect',
                   'attempted-user', 'attempted-admin']
 keywords = ['mitre_', 'attack_target']
+exclude_keywords = []
 # 定义 Set
 portVars = set()
 
@@ -48,7 +49,8 @@ replacements = {
     r'^CNC (\w+)\s*': r'\1 ',
     r'^GPL (\w+)\s*': r'\1 ',
     r'^ATTACK_RESPONSE\s*': 'ATTACK RESPONSE ',
-    r'^DYNAMIC_DNS\s*': 'DYNAMIC DNS '
+    r'^DYNAMIC_DNS\s*': 'DYNAMIC DNS ',
+    r'^WEB_CLIENT\s*': 'WEB CLIENT '
 }
 
 
@@ -87,6 +89,8 @@ def process_file(filepath, full_file):
                 classtype_match = classtype_regex.search(line)
                 if not full_file and classtype_match:
                     classtype = classtype_match.group(1)
+                if any(keyword in line for keyword in exclude_keywords):
+                    continue
                 # 如果匹配到，则直接添加规则, 否则继续判断若全文添加或属于指定类型或包含指定关键字则添加规则
                 if match and (full_file or classtype in classtype_list or any(keyword in line for keyword in keywords)):
                     # 从 line 中提取所有 \$\w+_PORTS
