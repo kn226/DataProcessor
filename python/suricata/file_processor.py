@@ -52,6 +52,7 @@ replacements = {
     r'^DYNAMIC_DNS\s*': 'DYNAMIC DNS ',
     r'^MOBILE_MALWARE\s*': 'MOBILE MALWARE ',
     r'^WEB_SPECIFIC_APPS\s*': '',
+    r'^WEB_SERVER\s*': 'WEB SERVER ',
     r'^WEB_CLIENT\s*': 'WEB CLIENT '
 }
 
